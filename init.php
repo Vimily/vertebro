@@ -7,7 +7,7 @@
  *
  * eg. /users/1/foos/4/bars.json
  */
-Route::set('vertebro-orm', '(<relations>)<model>(/<model_id>)(/<action>).json',
+/*Route::set('vertebro-orm', '(<relations>)<model>(/<model_id>)(/<action>).json',
 	array(
 		'relations' => '([a-zA-Z]+/[0-9]+/)+!',
 		'model_id'  => '[0-9]+',
@@ -33,7 +33,7 @@ Route::set('vertebro-orm', '(<relations>)<model>(/<model_id>)(/<action>).json',
 		'directory' => 'JSON',
 		'action'    => 'index',
 	));
-
+*/
 /**
  * Default Vertebro Route
  *
