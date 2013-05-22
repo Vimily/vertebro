@@ -146,7 +146,11 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 		// Return single object
 		if ($this->_model_id)
 		{
-			$data = $this->_run_column_filter($this->_model->as_array());
+			$array = (method_exists($this->_model, 'as_backbone'))
+				? $this->_model->as_backbone()
+				: $this->_model->as_array();
+
+			$data = $this->_run_column_filter($array);
 			return $this->body = $data;
 		}
 
@@ -199,7 +203,9 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 		try
 		{
 			$this->_model->save();
-			$this->body = $this->_model->as_array();
+			$this->body = (method_exists($this->_model, 'as_backbone'))
+				? $this->_model->as_backbone()
+				: $this->_model->as_array();
 		}
 		catch (ORM_Validation_Exception $e)
 		{
