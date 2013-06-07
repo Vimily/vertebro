@@ -143,14 +143,12 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 	// Handle GET requests
 	public function action_get()
 	{
+		$array_method = (method_exists($this->_model, 'as_backbone')) ? 'as_backbone' : 'as_array';
+
 		// Return single object
 		if ($this->_model_id)
 		{
-			$array = (method_exists($this->_model, 'as_backbone'))
-				? $this->_model->as_backbone()
-				: $this->_model->as_array();
-
-			$data = $this->_run_column_filter($array);
+			$data = $this->_run_column_filter($this->_model->$array_method());
 			return $this->body = $data;
 		}
 
@@ -161,7 +159,7 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 		foreach ($this->_run_query_filter()->_model->find_all() as $item)
 		{
 			// Run column filter on object
-			$item_data = $this->_run_column_filter($item->as_array());
+			$item_data = $this->_run_column_filter($item->$array_method());
 			$data[] = $item_data;
 		}
 
