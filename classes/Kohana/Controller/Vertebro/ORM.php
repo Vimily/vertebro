@@ -186,6 +186,7 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 		catch (ORM_Validation_Exception $e)
 		{
 			$this->body = array('errors' => $e->errors('models'));
+			$this->response->status(400);
 		}
 	}
 
@@ -208,6 +209,7 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 		catch (ORM_Validation_Exception $e)
 		{
 			$this->body = array('errors' => $e->errors('models'));
+			$this->response->status(400);
 		}
 	}
 
