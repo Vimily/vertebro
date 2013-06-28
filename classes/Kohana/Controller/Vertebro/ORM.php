@@ -187,6 +187,7 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 		{
 			$this->body = array('errors' => $e->errors('models'));
 			$this->response->status(400);
+			// test
 		}
 	}
 
