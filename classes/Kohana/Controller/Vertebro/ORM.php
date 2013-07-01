@@ -27,7 +27,7 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 	 *		   ),
 	 *		);
 	 *
-	 * @var  array
+	 * @var array
 	 */
 	protected $_column_filters;
 
