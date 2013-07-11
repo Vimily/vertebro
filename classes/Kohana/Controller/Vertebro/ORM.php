@@ -180,7 +180,10 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 			$this->_model->save();
 
 			// Set response header to HTTP 201 Created and return the created object
-			$this->body = $this->_model->as_array();
+			$this->body = (method_exists($this->_model, 'as_backbone'))
+				? $this->_model->as_backbone()
+				: $this->_model->as_array();
+
 			$this->response->status(201);
 		}
 		catch (ORM_Validation_Exception $e)
