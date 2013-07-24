@@ -71,7 +71,7 @@ class Kohana_Controller_Vertebro_ORM extends Controller_Vertebro {
 	{
 		parent::before();
 
-		if ( ! $this->request->is_ajax() AND Kohana::$environment = Kohana::PRODUCTION)
+		if ( ! $this->request->is_ajax() AND Kohana::$environment == Kohana::PRODUCTION)
 			throw HTTP_Exception::factory(404);
 
 		// Get the model name
