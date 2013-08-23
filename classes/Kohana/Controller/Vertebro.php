@@ -31,9 +31,6 @@ class Kohana_Controller_Vertebro extends Controller {
 	 */
 	public function before()
 	{
-		// Execute parent's before method
-		parent::before();
-
 		// Check method Support
 		if ( ! isset($this->_method_map[$this->request->method()]))
 			throw HTTP_Exception::factory(405)->allowed($this->_method_map);
@@ -43,8 +40,45 @@ class Kohana_Controller_Vertebro extends Controller {
 			? Arr::get($this->_method_map, $this->request->method())
 			: Arr::get($this->_method_map, $this->request->method()).'_'.$this->request->action();
 
-		// Execute the correct CRUD action based on the requested method
+
 		$this->request->action($action_name);
+	}
+
+	public function execute()
+	{
+		// Execute the correct CRUD action based on the requested method
+		try
+		{
+			// Try and return the normal request
+			return parent::execute();
+		}
+		catch(Vertebro_Exception $e)
+		{
+			// Assign the error code
+			$this->response->status($e->code());
+
+			// Assign the body
+			$this->body = array('error' => $e->errors());
+		}
+		catch(Kohana_Exception $e) {
+
+			if (Kohana::$environment != Kohana::DEVELOPMENT)
+			{
+				$this->response->status(400);
+
+				// Set a default error
+				$this->body = array('error' => 'Something went wrong');
+			}
+			else {
+				$this->body = array('error' => $e->getMessage());
+			}
+		}
+
+		// Run the after
+		$this->after();
+
+		// Return the response we have now
+		return $this->response;
 	}
 
 	/**
@@ -60,9 +94,6 @@ class Kohana_Controller_Vertebro extends Controller {
 
 		// Set and encode the body data
 		$this->response->body(json_encode($this->body));
-
-		// Execute parent's after method
-		parent::after();
 	}
 
 } // End Kohana_Controller_Vertebro
